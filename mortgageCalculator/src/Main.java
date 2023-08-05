@@ -12,14 +12,14 @@ public class Main {
         float annualInterestRate = (scanner.nextFloat() / TOTAL_PERCENT);
         float monthlyInterestRate = annualInterestRate / MONTHS_IN_YEAR;
         System.out.print("Period (Years): ");
-        int period = scanner.nextInt() * 12;
+        int paymentPeriod = scanner.nextInt() * MONTHS_IN_YEAR;
 
         double mortgage;
         double numerator;
         double denominator;
 
-        numerator = annualInterestRate * Math.pow((1 + monthlyInterestRate), period);
-        denominator = Math.pow ((1 + monthlyInterestRate), period) - 1;
+        numerator = monthlyInterestRate * Math.pow((1 + monthlyInterestRate), paymentPeriod);
+        denominator = Math.pow ((1 + monthlyInterestRate), paymentPeriod) - 1;
 
         mortgage = principal * ( numerator/denominator );
         System.out.print("Mortgage: " + NumberFormat.getCurrencyInstance().format(mortgage));
