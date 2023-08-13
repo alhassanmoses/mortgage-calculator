@@ -3,39 +3,33 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        final String PRINCIPAL_MESSAGE_PROMPT ="Please input the following in the order of the names presented. \nPrincipal ($1K - $10M): ";
+        final String ANNUAL_INTEREST_MESSAGE_PROMPT="Annual Interest Rate: ";
+        final String PAYMENT_PERIOD_MESSAGE_PROMPT= "Period (Years): ";
 
-        long principal;
-        float annualInterestRate;
-        byte paymentPeriod;
-        Scanner scanner = new Scanner(System.in);
+        long principal = (long) readValue(PRINCIPAL_MESSAGE_PROMPT, 1000, 10_000_000);
+        float annualInterestRate = (float) readValue(ANNUAL_INTEREST_MESSAGE_PROMPT,  1, 30);
+        byte paymentPeriod = (byte) readValue(PAYMENT_PERIOD_MESSAGE_PROMPT, 1, 30);
 
-        System.out.print("Please input the following in the order of the names presented. \nPrincipal ($1K - $10M): ");
-        while (true){
-            principal = scanner.nextLong();
-            if (principal >= 1000 && principal <= 10_000_000)
-                break;
-            System.out.print("Please enter a number between the ranges 1,000 - 10,000,000.\nPrincipal ($1K - $10M): ");
-        }
-
-        System.out.print("Annual Interest Rate: ");
-        while (true){
-            annualInterestRate = scanner.nextFloat();
-            if (annualInterestRate >= 1 && annualInterestRate <= 30)
-                break;
-            System.out.print("Please enter a value greater than 0 and less than or equal to 30. \nAnnual Interest Rate: ");
-        }
-
-        System.out.print("Period (Years): ");
-        while (true){
-            paymentPeriod = scanner.nextByte();
-            if (paymentPeriod >=1 && paymentPeriod <=30)
-                break;
-            System.out.print("Please input a value between 1 - 30.\nPeriod (Years): ");
-        }
-
-        double  mortgage = calculateMortgage(principal, annualInterestRate, paymentPeriod);
+        double mortgage = calculateMortgage(principal, annualInterestRate, paymentPeriod);
 
         System.out.print("Mortgage: " + NumberFormat.getCurrencyInstance().format(mortgage));
+
+    }
+
+    public static double readValue(String prompt, double minValue, double maxValue){
+        Scanner scanner = new Scanner(System.in);
+        double value;
+
+        while (true){
+            System.out.print(prompt);
+            value = scanner.nextDouble();
+            if (value >= minValue && value <= maxValue)
+                break;
+            System.out.print("Please enter a number between the ranges: " + minValue + " and " + maxValue + ".");
+        }
+
+        return value;
 
     }
 
